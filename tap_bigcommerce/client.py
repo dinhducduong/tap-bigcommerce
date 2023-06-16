@@ -109,6 +109,14 @@ class BigCommerce(Client):
                 'direction': 'asc'
         }):
             yield product
+    
+    @parse_date_string_arguments('bookmark')
+    @validate
+    def categories(self, replication_key, bookmark):
+
+        for product in self.api.resource('categories', {
+        }):
+            yield product
 
     @parse_date_string_arguments('bookmark')
     @validate
