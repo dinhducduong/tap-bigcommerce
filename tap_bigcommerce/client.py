@@ -16,42 +16,17 @@ def validate(method):
     def _validate(*args, **kwargs):
         if 'replication_key' in kwargs and \
                 kwargs['replication_key'] not in ['date_modified', 'id']:
-                raise Exception("Client Error - invalid replication_key")
+            raise Exception("Client Error - invalid replication_key")
 
         if 'bookmark' in kwargs and \
                 type(kwargs['bookmark']) is not datetime:
-                raise Exception(
-                    "Client Error - bookmark must be valid datetime"
-                )
+            raise Exception(
+                "Client Error - bookmark must be valid datetime"
+            )
 
         return method(*args, **kwargs)
 
     return _validate
-
-
-def parse_date_string_arguments(fields):
-    """
-    Transforms specified input datetime arguments into a datetime object
-    """
-
-    if type(fields) is not list:
-        fields = [fields]
-
-    def decorator(method):
-        @wraps(method)
-        def parse_dt(*args, **kwargs):
-            for key, value in kwargs.items():
-                if key in fields:
-                    if type(value) != str:
-                        raise Exception((
-                            "parse_date_string_arguments expects string value."
-                            "{} provided"
-                        ).format(value))
-                    kwargs[key] = parse(value)
-            return method(*args, **kwargs)
-        return parse_dt
-
-    return decorator
 
 
 class Client():
@@ -83,13 +58,6 @@ class BigCommerce(Client):
             self.authorized = False
             raise e
 
-    def iterdates(self, start_date):
-        for n in range(max(int((self.utcnow - start_date).days), 1)):
-            start = start_date + timedelta(n)
-            end = start_date + timedelta(n + 1)
-            yield start, min(end, self.utcnow)
-
-    @parse_date_string_arguments('bookmark')
     @validate
     def orders(self, replication_key, bookmark):
 
@@ -99,7 +67,6 @@ class BigCommerce(Client):
         }):
             yield order
 
-    @parse_date_string_arguments('bookmark')
     @validate
     def products(self, replication_key, bookmark):
 
@@ -110,7 +77,6 @@ class BigCommerce(Client):
         }):
             yield product
 
-    @parse_date_string_arguments('bookmark')
     @validate
     def customers(self, replication_key, bookmark):
         """
@@ -118,12 +84,9 @@ class BigCommerce(Client):
         is queried by day to ensure consistent replication key
         """
 
-        for start, end in self.iterdates(bookmark):
-            for customer in self.api.resource('customers', {
-                    'min_date_modified': start.isoformat(),
-                    'max_date_modified': end.isoformat()
-            }):
-                yield customer
+        for customer in self.api.resource('customers', {
+        }):
+            yield customer
 
     def coupons(self):
 
