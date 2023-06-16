@@ -109,7 +109,7 @@ def main():
         store_hash=config['store_hash']
     )
     current_time = datetime.datetime.utcnow()
-    start_date = current_time.strftime("%Y-%m-%dT%H:%M:%SZ")
+    start_date = '2017-01-01T00:00:00Z'
     # If discover flag was passed, run discovery mode and dump output to stdout
     if args.discover:
         do_discover(bigcommerce)
