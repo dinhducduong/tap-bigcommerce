@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import datetime
 import sys
 import json
 import singer
@@ -47,7 +48,7 @@ def ensure_credentials_are_authorized(client):
         raise Exception("BigCommerce Client not authorized.")
 
 
-def do_sync(client, catalog, state):
+def do_sync(client, catalog, state, start_date):
     ensure_credentials_are_authorized(client)
     selected_stream_names = get_selected_streams(catalog)
     populate_class_schemas(catalog, selected_stream_names)
@@ -79,6 +80,7 @@ def do_sync(client, catalog, state):
                 stream.tap_stream_id, {}
             ).get(instance.replication_key) is None:
                 state['bookmarks'][stream.tap_stream_id] = {
+                    instance.replication_key: start_date
                 }
 
         counter_value = sync_stream(state, instance)
@@ -106,7 +108,8 @@ def main():
         access_token=config['access_token'],
         store_hash=config['store_hash']
     )
-
+    current_time = datetime.datetime.utcnow()
+    start_date = current_time.strftime("%Y-%m-%dT%H:%M:%SZ")
     # If discover flag was passed, run discovery mode and dump output to stdout
     if args.discover:
         do_discover(bigcommerce)
@@ -120,7 +123,8 @@ def main():
         do_sync(
             client=bigcommerce,
             catalog=catalog,
-            state=args.state
+            state=args.state,
+            start_date=start_date
         )
 
 
