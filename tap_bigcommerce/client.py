@@ -112,11 +112,9 @@ class BigCommerce(Client):
     
     @parse_date_string_arguments('bookmark')
     @validate
-    def categories(self, replication_key, bookmark):
+    def categories(self, replication_key):
 
         for category in self.api.resource('categories', {
-            'date_modified:min': bookmark.isoformat(),
-            'sort': 'date_modified',
             'direction': 'asc'
         }):
             yield category
