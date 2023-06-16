@@ -115,6 +115,8 @@ class BigCommerce(Client):
     def categories(self, replication_key, bookmark):
 
         for category in self.api.resource('categories', {
+            'date_modified:min': bookmark.isoformat(),
+            'sort': 'date_modified',
             'direction': 'asc'
         }):
             yield category
