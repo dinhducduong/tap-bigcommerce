@@ -347,9 +347,6 @@
           "width": {
             "$ref": "type-number.json"
           },
-          "width": {
-            "$ref": "type-number.json"
-          },
           "height": {
             "$ref": "type-number.json"
           },
