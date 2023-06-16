@@ -11,7 +11,7 @@ from tap_bigcommerce.streams import STREAMS
 from tap_bigcommerce.sync import sync_stream
 
 REQUIRED_CONFIG_KEYS = [
-    "start_date", "client_id", "access_token", "store_hash"
+    "client_id", "access_token", "store_hash"
 ]
 
 logger = singer.get_logger().getChild('tap-bigcommerce')
