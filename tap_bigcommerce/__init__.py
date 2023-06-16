@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import datetime
 import sys
 import json
 import singer
@@ -107,7 +108,7 @@ def main():
         access_token=config['access_token'],
         store_hash=config['store_hash']
     )
-
+    start_date = datetime.datetime.now()
     # If discover flag was passed, run discovery mode and dump output to stdout
     if args.discover:
         do_discover(bigcommerce)
@@ -122,7 +123,7 @@ def main():
             client=bigcommerce,
             catalog=catalog,
             state=args.state,
-            start_date=config['start_date']
+            start_date= str(start_date)
         )
 
 
