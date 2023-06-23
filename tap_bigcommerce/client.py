@@ -111,8 +111,11 @@ class BigCommerce(Client):
             data = {
                 "id": product['id'],
                 "name": product['name'],
-                "sku": product['sku']
+                "sku": product['sku'],
+                "date_created": product['date_created'],
+                "date_modified": product['date_modified'],
             }
+            print("productproduct",data)
             yield data
     
     def categories(self):

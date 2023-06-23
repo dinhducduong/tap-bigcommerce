@@ -10,6 +10,12 @@
     },
     "sku": {
       "$ref": "type-string.json"
+    },
+    "date_created": {
+      "$ref": "type-datetime.json"
+    },
+    "date_modified": {
+      "$ref": "type-datetime.json"
     }
   }
 }
