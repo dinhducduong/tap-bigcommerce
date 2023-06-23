@@ -108,8 +108,12 @@ class BigCommerce(Client):
                 'sort': 'date_modified',
                 'direction': 'asc'
         }):
-            print("productproduct",product)
-            yield product
+            data = {
+                "id": product['id'],
+                "name": product['name'],
+                "sku": product['sku']
+            }
+            yield data
     
     def categories(self):
 
