@@ -113,6 +113,7 @@ class BigCommerce(Client):
     def categories(self):
 
         for category in self.api.resource('categories'):
+            print("categorycategory",category)
             yield category
 
     @parse_date_string_arguments('bookmark')
