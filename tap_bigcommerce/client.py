@@ -112,8 +112,8 @@ class BigCommerce(Client):
                 "id": product['id'],
                 "name": product['name'],
                 "sku": product['sku'],
-                "created_at": product['created_at'],
-                "updated_at": product['updated_at'],
+                "created_at": product['date_created'],
+                "updated_at": product['date_modified'],
                 "date_created": product['date_created'],
                 "date_modified": product['date_modified'],
                 "options": []
