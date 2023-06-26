@@ -109,6 +109,7 @@ class BigCommerce(Client):
                 'sort': 'date_modified',
                 'direction': 'asc'
         }):
+            print("product",product)
             data = {
                 "id": product['id'],
                 "name": product['name'],
