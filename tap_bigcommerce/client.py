@@ -137,7 +137,7 @@ class BigCommerce(Client):
 
     @parse_date_string_arguments('bookmark')
     @validate
-    def products_attributes(self, replication_key, bookmark):
+    def products_attribute(self, replication_key, bookmark):
 
         for product in self.api.resource('products', {
                 'date_modified:min': bookmark.isoformat(),

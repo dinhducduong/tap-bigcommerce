@@ -1,6 +1,6 @@
 {
   "type": "object",
-  "name": "products_attributes",
+  "name": "products_attribute",
   "properties": {
     "id": {
       "$ref": "type-integer.json"
