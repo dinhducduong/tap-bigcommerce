@@ -221,6 +221,10 @@ class Bigcommerce():
             'version': 3,
             'path': 'catalog/categories',
         },
+        'products_attribute': {
+            'version': 3,
+            'path': 'catalog/products/{product_id}/options',
+        },
         'coupons': {
             'version': 2,
             'path': 'coupons',
