@@ -3,7 +3,7 @@
   "name": "products",
   "properties": {
     "id": {
-      "$ref": "type-number.json"
+      "$ref": "type-integer.json"
     },
     "name": {
       "$ref": "type-string.json"
@@ -11,11 +11,68 @@
     "sku": {
       "$ref": "type-string.json"
     },
-    "date_created": {
-      "$ref": "type-datetime.json"
+    "created_at": {
+      "$ref": "type-string.json"
     },
-    "date_modified": {
-      "$ref": "type-datetime.json"
+    "updated_at": {
+      "$ref": "type-string.json"
+    },
+    "source": {
+      "$ref": "type-string.json"
+    },
+    "options": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "product_sku": {
+            "$ref": "type-string.json"
+          },
+          "title": {
+            "$ref": "type-string.json"
+          },
+          "price": {
+            "$ref": "type-integer.json"
+          },
+          "values": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "$ref": "type-string.json"
+                },
+                "option_type_id": {
+                  "$ref": "type-integer.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "media_gallery_entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "type-integer.json"
+          },
+          "position": {
+            "$ref": "type-integer.json"
+          },
+          "file": {
+            "$ref": "type-string.json"
+          },
+          "created_at": {
+            "$ref": "type-string.json"
+          },
+          "updated_at": {
+            "$ref": "type-string.json"
+          }
+        }
+      }
     }
   }
 }

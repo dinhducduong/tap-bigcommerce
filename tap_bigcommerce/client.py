@@ -112,10 +112,25 @@ class BigCommerce(Client):
                 "id": product['id'],
                 "name": product['name'],
                 "sku": product['sku'],
+                "created_at": product['created_at'],
+                "updated_at": product['updated_at'],
                 "date_created": product['date_created'],
                 "date_modified": product['date_modified'],
+                "options": []
             }
-            print("productproduct",data)
+            for variant in product['variants']:
+                variant_convert = {
+                    "product_sku": variant['sku'],
+                    "title": product['name'],
+                    "price": variant['price'],
+                    "values": [],
+                }
+                for option_value in variant['option_values']:
+                    option_convert = {
+                        "title": option_value['label'],
+                        "option_type_id": option_value['option_id'],
+                    }
+                    variant_convert['values'].append(option_convert)
             yield data
     
     def categories(self):
