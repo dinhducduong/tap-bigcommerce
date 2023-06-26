@@ -115,8 +115,6 @@ class BigCommerce(Client):
                 "sku": product['sku'],
                 "created_at": product['date_created'],
                 "updated_at": product['date_modified'],
-                "date_created": product['date_created'],
-                "date_modified": product['date_modified'],
                 "source": "bigcommerce",
                 "options": []
             }
