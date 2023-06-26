@@ -145,10 +145,11 @@ class BigCommerce(Client):
                 'direction': 'asc'
         }):
             product_id = product['id']
-            for opt in self.api.resource(f'products_attribute/{product_id}/options', {
+            for opt in self.api.resource('products_attribute', {
                 'date_modified:min': bookmark.isoformat(),
                 'sort': 'date_modified',
-                'direction': 'asc'
+                'direction': 'asc',
+                'product_id': product_id
             }):
                 print(opt)
                 yield opt
