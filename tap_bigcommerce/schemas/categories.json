@@ -2,61 +2,14 @@
   "type": "object",
   "name": "categories",
   "properties": {
-    "id": {
-      "$ref": "type-number.json"
-    },
-    "parent_id": {
-      "$ref": "type-number.json"
-    },
-    "name": {
-      "$ref": "type-string.json"
-    },
-    "description": {
-      "$ref": "type-string.json"
-    },
-    "views": {
-      "$ref": "type-number.json"
-    },
-    "sort_order": {
-      "$ref": "type-number.json"
-    },
-    "page_title": {
-      "$ref": "type-string.json"
-    },
-    "meta_keywords": {
-      "type": "array",
-      "items": {
+      "id": {
+        "$ref": "type-integer.json"
+      },
+      "name": {
+        "$ref": "type-string.json"
+      },
+      "source": {
         "$ref": "type-string.json"
       }
-    },
-    "meta_description": {
-      "$ref": "type-string.json"
-    },
-    "layout_file": {
-      "$ref": "type-string.json"
-    },
-    "image_url": {
-      "$ref": "type-string.json"
-    },
-    "is_visible": {
-      "$ref": "type-boolean.json"
-    },
-    "search_keywords": {
-      "$ref": "type-string.json"
-    },
-    "default_product_sort": {
-      "$ref": "type-string.json"
-    },
-    "custom_url": {
-      "type": ["object", "null"],
-      "properties": {
-        "url": {
-          "$ref": "type-string.json"
-        },
-        "is_customized": {
-          "$ref": "type-boolean.json"
-        }
-      }
-    }
   }
 }

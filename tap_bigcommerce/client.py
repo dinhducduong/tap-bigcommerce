@@ -117,6 +117,7 @@ class BigCommerce(Client):
                 "updated_at": product['date_modified'],
                 "date_created": product['date_created'],
                 "date_modified": product['date_modified'],
+                "source": "bigcommerce",
                 "options": []
             }
             if "variants" in product:
@@ -176,7 +177,12 @@ class BigCommerce(Client):
     def categories(self):
 
         for category in self.api.resource('categories'):
-            yield category
+            raw_data = {
+                "id": category['id'],
+                "name": category['name'],
+                "source": "bigcommerce"
+            }
+            yield raw_data
 
     @parse_date_string_arguments('bookmark')
     @validate
