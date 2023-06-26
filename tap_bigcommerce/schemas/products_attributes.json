@@ -1,0 +1,35 @@
+{
+  "type": "object",
+  "name": "products_attributes",
+  "properties": {
+    "id": {
+      "$ref": "type-integer.json"
+    },
+    "default_frontend_label": {
+      "$ref": "type-string.json"
+    },
+    "attribute_id": {
+      "$ref": "type-integer.json"
+    },
+    "default_value": {
+      "$ref": "type-string.json"
+    },
+    "options": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "$ref": "type-string.json"
+          },
+          "value": {
+            "$ref": "type-string.json"
+          }
+        }
+      }
+    },
+    "source": {
+      "$ref": "type-string.json"
+    }
+  }
+}
