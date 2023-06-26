@@ -144,6 +144,7 @@ class BigCommerce(Client):
                 'sort': 'date_modified',
                 'direction': 'asc'
         }):
+            print(product)
             data_convert = []
             if "options" in product:
                 for option in product['options']:
