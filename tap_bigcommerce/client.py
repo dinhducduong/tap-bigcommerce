@@ -171,7 +171,7 @@ class BigCommerce(Client):
                     item for item in data_convert
                     if item["default_frontend_label"] in unique_names or len(item["options"]) == max_option_count
                 ]
-                yield final_objects
+                yield final_objects[0]
 
     def categories(self):
 
