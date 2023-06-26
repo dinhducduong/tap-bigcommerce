@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from collections import Counter
 from functools import wraps
 
 import singer
@@ -16,13 +17,13 @@ def validate(method):
     def _validate(*args, **kwargs):
         if 'replication_key' in kwargs and \
                 kwargs['replication_key'] not in ['date_modified', 'id']:
-                raise Exception("Client Error - invalid replication_key")
+            raise Exception("Client Error - invalid replication_key")
 
         if 'bookmark' in kwargs and \
                 type(kwargs['bookmark']) is not datetime:
-                raise Exception(
-                    "Client Error - bookmark must be valid datetime"
-                )
+            raise Exception(
+                "Client Error - bookmark must be valid datetime"
+            )
 
         return method(*args, **kwargs)
 
@@ -108,7 +109,6 @@ class BigCommerce(Client):
                 'sort': 'date_modified',
                 'direction': 'asc'
         }):
-            print("product",product)
             data = {
                 "id": product['id'],
                 "name": product['name'],
@@ -134,7 +134,45 @@ class BigCommerce(Client):
                         }
                         variant_convert['values'].append(option_convert)
             yield data
-    
+
+    @parse_date_string_arguments('bookmark')
+    @validate
+    def products_attributes(self, replication_key, bookmark):
+
+        for product in self.api.resource('products', {
+                'date_modified:min': bookmark.isoformat(),
+                'sort': 'date_modified',
+                'direction': 'asc'
+        }):
+            data_convert = []
+            if "options" in product:
+                for option in product['options']:
+                    data_option = {
+                        "id": option['id'],
+                        "attribute_id": option['id'],
+                        "default_frontend_label": option['display_name'],
+                        "default_value": option['display_name'],
+                        "source": "bigcommerce",
+                        "options": []
+                    }
+                    for value in option['option_values']:
+                        data_option['options'].append({
+                            "label": value['label'],
+                            "value": value['label'],
+                        })
+                    data_convert.append(data_option)
+                max_option_count = max(len(item["options"])
+                                    for item in data_convert)
+                name_counter = Counter(item["default_frontend_label"]
+                                    for item in data_convert)
+                unique_names = [name for name,
+                                count in name_counter.items() if count == 1]
+                final_objects = [
+                    item for item in data_convert
+                    if item["default_frontend_label"] in unique_names or len(item["options"]) == max_option_count
+                ]
+                yield final_objects
+
     def categories(self):
 
         for category in self.api.resource('categories'):
